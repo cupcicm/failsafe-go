@@ -1,4 +1,4 @@
-module github.com/failsafe-go/failsafe-go
+module github.com/cupcicm/failsafe-go
 
 go 1.19
 
