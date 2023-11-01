@@ -46,7 +46,11 @@ func (s *smoothRateLimiterStats[R]) acquirePermits(requestedPermits int, maxWait
 		newNextFreePermitTime = s.nextFreePermitTime + requestedPermitTime
 	}
 
-	waitTime = max(newNextFreePermitTime-currentTime-s.config.interval, time.Duration(0))
+	if newNextFreePermitTime-currentTime-s.config.interval > 0 {
+		waitTime = newNextFreePermitTime - currentTime - s.config.interval
+	} else {
+		waitTime = 0
+	}
 	if exceedsMaxWaitTime(waitTime, maxWaitTime) {
 		return -1
 	}

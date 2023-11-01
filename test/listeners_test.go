@@ -270,7 +270,7 @@ func TestGetElapsedTime(t *testing.T) {
 			assert.True(t, e.ElapsedAttemptTime().Milliseconds() >= 90)
 		}).
 		Build()
-	failsafe.Get(func() (any, error) {
+	failsafe.Get[any](func() (any, error) {
 		time.Sleep(100 * time.Millisecond)
 		return false, nil
 	}, rp)

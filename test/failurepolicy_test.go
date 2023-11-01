@@ -18,7 +18,7 @@ func TestHandleRetriesExceededError(t *testing.T) {
 		Build()
 	rp := retrypolicy.WithDefaults[bool]()
 
-	result, err := failsafe.Get(func() (bool, error) {
+	result, err := failsafe.Get[bool](func() (bool, error) {
 		return false, errors.New("test")
 	}, fb, rp)
 	assert.True(t, result)

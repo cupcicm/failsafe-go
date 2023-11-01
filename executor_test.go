@@ -22,7 +22,7 @@ func TestRunWithSuccess(t *testing.T) {
 
 func TestGetWithSuccess(t *testing.T) {
 	rp := retrypolicy.WithDefaults[string]()
-	result, err := failsafe.Get(func() (string, error) {
+	result, err := failsafe.Get[string](func() (string, error) {
 		return "test", nil
 	}, rp)
 	assert.Equal(t, "test", result)
@@ -31,7 +31,7 @@ func TestGetWithSuccess(t *testing.T) {
 
 func TestGetWithFailure(t *testing.T) {
 	rp := retrypolicy.WithDefaults[string]()
-	result, err := failsafe.Get(func() (string, error) {
+	result, err := failsafe.Get[string](func() (string, error) {
 		return "", testutil.ErrInvalidArgument
 	}, rp)
 
@@ -43,7 +43,7 @@ func TestGetWithExecution(t *testing.T) {
 	rp := retrypolicy.WithDefaults[string]()
 	fb := fallback.WithResult("fallback")
 	var lasteExec failsafe.Execution[string]
-	result, err := failsafe.GetWithExecution(func(exec failsafe.Execution[string]) (string, error) {
+	result, err := failsafe.GetWithExecution[string](func(exec failsafe.Execution[string]) (string, error) {
 		lasteExec = exec
 		return "", testutil.ErrInvalidArgument
 	}, fb, rp)

@@ -96,8 +96,8 @@ func TestShouldReturnErrCircuitBreakerOpenAfterFailuresExceeded(t *testing.T) {
 		Build()
 
 	// When
-	failsafe.Get(testutil.GetFalseFn, cb)
-	failsafe.Get(testutil.GetFalseFn, cb)
+	failsafe.Get[bool](testutil.GetFalseFn, cb)
+	failsafe.Get[bool](testutil.GetFalseFn, cb)
 
 	// Then
 	testutil.TestGetFailure[bool](t, nil, failsafe.NewExecutor[bool](cb),
